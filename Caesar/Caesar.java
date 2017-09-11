@@ -15,6 +15,7 @@ public class Caesar {
           text = input.readLine();
           if (text != null){
             text = text.replaceAll("\\d", "");
+            text = text.toLowerCase();
             sB1.append(text);
             sB1.append("\n");
           }
@@ -30,21 +31,23 @@ public class Caesar {
     return info;
   }
 
-  public String readparams(){
+  public int readparams(){
     File key = new File("parameter.txt");
     String text = new String("");
+    int param = 0;
     try {
       RandomAccessFile input = new RandomAccessFile(key, "r");
       try {
           text = input.readLine();
           input.close();
+          param = Integer.parseInt(text);
       } catch (IOException e) {
         System.out.println("Error reading file");
       }
     } catch (FileNotFoundException e) {
       System.out.println("File not found");
     }
-    return text;
+    return param;
   }
 
   public void writeparams(String param) {
@@ -57,16 +60,30 @@ public class Caesar {
     } catch (IOException e) {}
   }
 
-  public String crypt(String inputString, String passString) {
-    return null;
-  }
+  private char[] encrypt(char[] source, int offset){
+		char[] destination = new char[source.length];
+    int temp;
+    for (int i = 0; i < source.length; ++i){
+			temp = source[i] + offset;
+      if(source[i] == 32){
+        destination[i] = (char)(32);
+      }else if(temp < 127 && temp > 31){
+        destination[i] = (char)(temp);
+      }else if (temp > 126){
+        destination[i] = (char)(temp - 94);
+      }else{
+        destination[i] = (char)(temp + 94);
+      }
+		}
+		return destination;
+	}
 
 
   public static void main(String[] args) {
     Caesar start = new Caesar();
     System.out.println("Caesar Cipher - choose option");
-    System.out.println("1. Crypting text from file");
-    System.out.println("2. Crypting text from keyboard");
+    System.out.println("1. Encrypting text from file");
+    System.out.println("2. Encrypting text from keyboard");
     System.out.println("3. Decrypting text from file");
     System.out.println("4. Decrypting text from keyboard");
     System.out.println("5. Change parameters");
@@ -87,8 +104,9 @@ public class Caesar {
       switch (liczba) {
         case 1:
             String text = start.read();
-            String key = start.readparams();
-            String crypted = start.crypt(text, key);
+            char[] textchar = text.toCharArray();
+            int key = start.readparams();
+            char[] crypted = start.encrypt(textchar, key);
             System.out.println(crypted);
             break;
 
