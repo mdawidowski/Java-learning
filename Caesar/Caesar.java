@@ -89,6 +89,7 @@ public class Caesar {
     System.out.println("5. Change parameters");
     System.out.println("6. Exit");
     Scanner input = new Scanner(System.in);
+    Scanner scan = new Scanner(System.in);
     int liczba = 0;
       try {
         while (liczba <= 0 || liczba > 6) {
@@ -111,7 +112,13 @@ public class Caesar {
             break;
 
         case 2:
+            text = scan.nextLine();
+            text = text.replaceAll("\\d", "");
+            text = text.toLowerCase();
+            textchar = text.toCharArray();
             key = start.readparams();
+            crypted = start.encrypt(textchar, key);
+            System.out.println(crypted);
             break;
 
         case 3:
@@ -125,7 +132,7 @@ public class Caesar {
 
         case 5:
             key = start.readparams();
-            System.out.println("Your current parameter is " + key);
+            System.out.println("Your current parameter is " + key + ". Changing parameter can cause problems with decrypting previously crypted messages");
             System.out.print("Set new parameter: ");
             Scanner param = new Scanner(System.in);
             String parameter = param.nextLine();
