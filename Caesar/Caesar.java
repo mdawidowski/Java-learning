@@ -50,7 +50,17 @@ public class Caesar {
     return param;
   }
 
-  public void writeparams(String param) {
+  public void write(char[] text){
+    File crypto = new File("crypto.txt");
+    try {
+      Writer writer = new OutputStreamWriter(new FileOutputStream(crypto), "UTF-8");
+      BufferedWriter fout = new BufferedWriter(writer);
+      fout.write(text);
+      fout.close();
+    } catch (IOException e) {}
+  }
+
+  public void writeparams(String param){
     File key = new File("parameter.txt");
     try {
       Writer writer = new OutputStreamWriter(new FileOutputStream(key), "UTF-8");
@@ -67,6 +77,8 @@ public class Caesar {
 			temp = source[i] + offset;
       if(source[i] == 32){
         destination[i] = (char)(32);
+      }else if(source[i] == 10){
+        destination[i] = (char)(10);
       }else if(temp < 127 && temp > 31){
         destination[i] = (char)(temp);
       }else if (temp > 126){
@@ -77,7 +89,6 @@ public class Caesar {
 		}
 		return destination;
 	}
-
 
   public static void main(String[] args) {
     Caesar start = new Caesar();
@@ -108,7 +119,8 @@ public class Caesar {
             char[] textchar = text.toCharArray();
             int key = start.readparams();
             char[] crypted = start.encrypt(textchar, key);
-            System.out.println(crypted);
+            start.write(crypted);
+            System.out.println("Encrypted code has been saved in crypto.txt");
             break;
 
         case 2:
@@ -118,7 +130,8 @@ public class Caesar {
             textchar = text.toCharArray();
             key = start.readparams();
             crypted = start.encrypt(textchar, key);
-            System.out.println(crypted);
+            start.write(crypted);
+            System.out.println("Encrypted code has been saved in crypto.txt");
             break;
 
         case 3:
