@@ -1,0 +1,4 @@
+hamburger	7.0
+pizza	19.0
+soda	5.0
+spaghetti	22.0
