@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class ToolShop {
     private static ToolShop instance;
-    private ArrayList<Tool> toolsList = new ArrayList<Tool>();
+    private static ArrayList<Tool> toolsList = new ArrayList<Tool>();
     //singleton
     public static ToolShop getInstance() {
         if (instance == null) {
@@ -23,7 +23,7 @@ public class ToolShop {
         toolsList.add(tool);
     }
 
-    public ArrayList<Tool> getToolsList(){
+    public static ArrayList<Tool> getToolsList(){
         return toolsList;
     }
 

@@ -1,7 +1,4 @@
 package queue;
-
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -29,7 +26,7 @@ public class Queue implements QueueInterface {
     public void notifyObservers() {
         Iterator<QueueChecker> it = observers.iterator();
         while (it.hasNext()){
-            QueueChecker qc = it.next();
+            QueueChecker qc = (QueueChecker) it.next();
             qc.update(queueSize);
         }
     }
